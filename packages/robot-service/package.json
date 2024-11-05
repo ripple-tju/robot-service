@@ -1,0 +1,39 @@
+{
+	"name": "@ripple.tju/robot-service",
+	"version": "0.0.0",
+	"description": "Service for operating human IO devices.",
+	"main": "src/index.mjs",
+	"devDependencies": {
+		"@rollup/plugin-node-resolve": "^15.3.0",
+		"@rollup/plugin-terser": "^0.4.4",
+		"@types/node": "^22.9.0",
+		"rollup": "^4.24.4"
+	},
+	"scripts": {
+		"build:extract": "node script/extract.mjs",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"robot"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:ripple-tju/robot-service.git"
+	},
+	"author": "ChaosLee",
+	"license": "MIT",
+	"dependencies": {
+		"@nut-tree-fork/nut-js": "^4.2.2",
+		"@produck/duck": "^1.0.5",
+		"@produck/duck-log": "^1.0.8",
+		"@produck/duck-log-quack": "^1.0.3",
+		"@produck/duck-runner": "^1.1.2",
+		"@produck/duck-web": "^1.0.6",
+		"@produck/duck-web-koa": "^1.0.3",
+		"@produck/duck-web-koa-forker": "^1.0.3",
+		"@produck/duck-workspace": "^1.0.5",
+		"@produck/quack": "^0.1.1",
+		"koa-body": "^6.0.1",
+		"koa-forker": "^0.1.1"
+	}
+}

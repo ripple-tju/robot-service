@@ -12,6 +12,10 @@
 		"packages/robot-service",
 		"test"
 	],
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:ripple-tju/robot-service.git"
+	},
 	"devDependencies": {
 		"@eslint/js": "^9.14.0",
 		"@produck/eslint-rules": "^0.1.0",
