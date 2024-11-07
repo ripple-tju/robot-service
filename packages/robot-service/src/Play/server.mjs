@@ -22,7 +22,7 @@ export default DuckRunner.definePlay(function ServerPlay({
 
 			await Session.set();
 			ws.on('close', () => Session.destroy());
-			ws.on('message', RobotMessageHandler);
+			ws.on('message', message => RobotMessageHandler(message, ws));
 		});
 
 		server.listen(port, host);
