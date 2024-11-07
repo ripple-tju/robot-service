@@ -1,18 +1,31 @@
 import * as http from 'node:http';
-import * as Quack from '@produck/quack';
 import * as DuckRunner from '@produck/duck-runner';
+import { WebSocketServer } from 'ws';
+
+import * as Robot from './robot.mjs';
 
 export default DuckRunner.definePlay(function ServerPlay({
-	Log, Web, Options
+	Kit, Log, Options, Session,
 }) {
-	const app = Web.Application('Service');
-	const loggerWarpedApp = Quack.Format.Apache.HttpAdapter(app, Log.Access);
+	const RobotMessageHandler = Robot.Provider(Kit('APP::ROBOT'));
 
 	return async function play() {
 		const { host, port } = Options.server;
-		const server = http.createServer(loggerWarpedApp);
+		const server = http.createServer();
 
-		server.listen(host, port);
-		Log.System(`Robot listening: host=${1} port=${1}`);
+		new WebSocketServer({ server }).on('connection', async ws => {
+			const session = await Session.get();
+
+			if (session !== null) {
+				return ws.close();
+			}
+
+			await Session.set();
+			ws.on('close', () => Session.destroy());
+			ws.on('message', RobotMessageHandler);
+		});
+
+		server.listen(port, host);
+		Log.System(`Robot listening: host=${host} port=${port}`);
 	};
 });

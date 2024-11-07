@@ -3,10 +3,17 @@
 	"version": "0.0.0",
 	"description": "Service for operating human IO devices.",
 	"main": "src/index.mjs",
+	"type": "module",
+	"types": "./src/index.d.ts",
+	"exports": {
+		"import": "./src/index.mjs",
+		"types": "./src/index.d.ts"
+	},
 	"devDependencies": {
 		"@rollup/plugin-node-resolve": "^15.3.0",
 		"@rollup/plugin-terser": "^0.4.4",
 		"@types/node": "^22.9.0",
+		"@types/ws": "^8.5.13",
 		"rollup": "^4.24.4"
 	},
 	"scripts": {
@@ -32,8 +39,10 @@
 		"@produck/duck-web-koa": "^1.0.3",
 		"@produck/duck-web-koa-forker": "^1.0.3",
 		"@produck/duck-workspace": "^1.0.5",
+		"@produck/mold": "^0.3.1",
 		"@produck/quack": "^0.1.1",
 		"koa-body": "^6.0.1",
-		"koa-forker": "^0.1.1"
+		"koa-forker": "^0.1.1",
+		"ws": "^8.18.0"
 	}
 }

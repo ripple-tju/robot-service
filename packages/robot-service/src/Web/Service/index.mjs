@@ -1,11 +1,13 @@
-import { defineKoaApp } from '@produck/duck-web-koa';
+import * as Duck from '@produck/duck';
+import { WebSocketServer } from 'ws';
 
-import * as Router from './Router/index.mjs';
-
-export const Provider = defineKoaApp(function AgentApplication(app, {
-	Forker,
+export const Provider = Duck.inject(function ServiceProvider({
+	Session,
 }) {
-	app.use(Forker());
-}, [
-	Router.plugin,
-]);
+	/**
+	 * @param server {import('node:http').Server}
+	 */
+	return function ServiceWebSocket(server) {
+
+	};
+});

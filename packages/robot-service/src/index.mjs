@@ -10,6 +10,8 @@ import * as DuckLogQuack from '@produck/duck-log-quack';
 
 import * as meta from './meta.gen.mjs';
 import ServerPlay from './Play/server.mjs';
+import * as Session from './Feature/Session.mjs';
+import * as Options from './Options.mjs';
 
 export const Product = Duck.define({
 	id: 'cn.edu.tju.ripple.robot',
@@ -44,7 +46,25 @@ export const Product = Duck.define({
 		]),
 	],
 }, function Robot({
+	Kit, Workspace, Runner,
+}, options) {
+	const _options = Options.normalize(options);
+	Kit.Options = options;
 
-}) {
+	Kit.Session = new Session.Manager({
+		read: _options.session.read,
+		write: _options.session.write,
+		remove: _options.session.remove,
+	});
 
+	Runner.ready();
+
+	return {
+		async install() {
+			await Workspace.buildAll();
+		},
+		async boot(mode = 'solo') {
+			await Runner.start(mode);
+		},
+	};
 });
