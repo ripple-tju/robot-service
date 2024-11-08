@@ -1,0 +1,12 @@
+{
+  "name": "@ripple.tju/robot-control",
+  "version": "0.0.0",
+  "description": "Client SDK to @ripple.tju/robot-service.",
+  "main": "src/index.mjs",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ChaosLee",
+  "license": "MIT"
+}
