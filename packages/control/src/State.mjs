@@ -17,26 +17,30 @@ export class RobotControlState {
 
 	#instruction = new Uint8Array(this.buffer, 1, 1);
 
+	/** @return {this} */
 	setInstruction(code) {
 		this.#instruction[0] = code;
 	}
 
 	#point = new Int16Array(this.buffer, 2, 2);
 
+	/** @return {this} */
 	setPoint(x, y) {
 		this.#point[0] = x;
 		this.#point[1] = y;
 	}
 
-	#code = new Uint8Array(this.buffer, 1, 1);
+	#code = new Uint8Array(this.buffer, 2, 1);
 
+	/** @return {this} */
 	setCode(code) {
 		this.#code[0] = code;
 	}
 
-	#operand = new Uint32Array(this.buffer);
+	#operand = new Uint32Array(this.buffer, 2);
 
-	clear() {
+	/** @return {this} */
+	clearArguments() {
 		this.#operand[0] = 0;
 	}
 }
@@ -48,9 +52,10 @@ for (const name of ['setPoint', 'setCode']) {
 
 	prototype[name] = {
 		[name](...args) {
-			this.clear();
+			this.clearArguments();
+			_fn.call(this, ...args);
 
-			return _fn.call(this, ...args);
+			return this;
 		},
 	}[name];
 });

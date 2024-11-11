@@ -1,4 +1,17 @@
-let timeout = 1000;
+class Item {
+	#value;
 
-export const setTimeout = ms => timeout = ms;
-export const getTimeout = () => timeout;
+	constructor(defaultValue) {
+		this.#value = defaultValue;
+	}
+
+	get() {
+		return this.#value;
+	}
+
+	set(value) {
+		this.#value = value;
+	}
+}
+
+export const timeout = new Item(1000);
