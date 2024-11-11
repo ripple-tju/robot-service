@@ -1,6 +1,6 @@
 {
 	"name": "@ripple.tju/robot-service",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"private": true,
 	"description": "Service for operating human IO devices.",
 	"main": "src/index.mjs",

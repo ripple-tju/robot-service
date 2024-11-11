@@ -1,6 +1,6 @@
 {
 	"name": "@ripple.tju/robot-control",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "Client SDK to @ripple.tju/robot-service.",
 	"files": [
 		"src",
@@ -17,7 +17,6 @@
 	"publishConfig": {
 		"access": "public"
 	},
-	"devDependencies": {},
 	"scripts": {
 		"build": "rollup -c script/rollup.config.mjs",
 		"prepublishOnly": "npm run build"
