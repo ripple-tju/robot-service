@@ -55,7 +55,7 @@ export class RobotControl extends EventTarget {
 			};
 
 			return await promise;
-		} catch (error) {
+		} catch {
 			//TODO
 		} finally {
 			clearTimeout(this.#pendings[id].timer);

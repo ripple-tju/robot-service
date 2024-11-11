@@ -1,6 +1,7 @@
 {
 	"name": "@ripple.tju/robot-service",
 	"version": "0.0.0",
+	"private": true,
 	"description": "Service for operating human IO devices.",
 	"main": "src/index.mjs",
 	"type": "module",
@@ -17,8 +18,7 @@
 		"rollup": "^4.24.4"
 	},
 	"scripts": {
-		"build:extract": "node script/extract.mjs",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build:extract": "node script/extract.mjs"
 	},
 	"keywords": [
 		"robot"

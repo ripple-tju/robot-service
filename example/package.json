@@ -1,6 +1,7 @@
 {
 	"name": "@ripple.tju/robot-example",
 	"version": "0.0.0",
+	"private": true,
 	"main": "index.js",
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^28.0.1",

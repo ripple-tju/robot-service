@@ -1,15 +1,14 @@
 {
-  "name": "@ripple.tju/robot-cli",
-  "version": "0.0.0",
-  "main": "src/index.mjs",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "ChaosLee",
-  "license": "MIT",
-  "description": "",
-  "dependencies": {
-    "@ripple.tju/robot-service": "^0.0.0",
-    "commander": "^12.1.0"
-  }
+	"name": "@ripple.tju/robot-cli",
+	"version": "0.0.0",
+	"private": true,
+	"main": "src/index.mjs",
+	"scripts": {},
+	"author": "ChaosLee",
+	"license": "MIT",
+	"description": "",
+	"dependencies": {
+		"@ripple.tju/robot-service": "^0.0.0",
+		"commander": "^12.1.0"
+	}
 }

@@ -1,4 +1,4 @@
-import { program } from 'commander';
+// import { program } from 'commander';
 import * as RobotService from '@ripple.tju/robot-service';
 
 let session = null;
