@@ -3,7 +3,7 @@ export class RobotControlState {
 		Object.freeze(this);
 	}
 
-	buffer = new ArrayBuffer();
+	buffer = new ArrayBuffer(6);
 
 	#id = new Uint8Array(this.buffer, 0, 1);
 
@@ -17,31 +17,35 @@ export class RobotControlState {
 
 	#instruction = new Uint8Array(this.buffer, 1, 1);
 
-	/** @return {this} */
 	setInstruction(code) {
 		this.#instruction[0] = code;
+
+		return this;
 	}
 
 	#point = new Int16Array(this.buffer, 2, 2);
 
-	/** @return {this} */
 	setPoint(x, y) {
 		this.#point[0] = x;
 		this.#point[1] = y;
+
+		return this;
 	}
 
 	#code = new Uint8Array(this.buffer, 2, 1);
 
-	/** @return {this} */
 	setCode(code) {
 		this.#code[0] = code;
+
+		return this;
 	}
 
-	#operand = new Uint32Array(this.buffer, 2);
+	#operand = new Uint8Array(this.buffer, 2);
 
-	/** @return {this} */
 	clearArguments() {
-		this.#operand[0] = 0;
+		this.#operand.fill(0, 0);
+
+		return this;
 	}
 }
 
@@ -53,9 +57,8 @@ for (const name of ['setPoint', 'setCode']) {
 	prototype[name] = {
 		[name](...args) {
 			this.clearArguments();
-			_fn.call(this, ...args);
 
-			return this;
+			return _fn.call(this, ...args);
 		},
 	}[name];
-});
+};

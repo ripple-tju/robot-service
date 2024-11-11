@@ -13,7 +13,7 @@ export class RobotControl extends EventTarget {
 	#websocket = null;
 	#url;
 
-	constructor(url = 'http://example.com') {
+	constructor(url) {
 		super();
 		this.#url = new URL(url);
 		Object.freeze(this);
