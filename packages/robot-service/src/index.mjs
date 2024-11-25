@@ -19,15 +19,6 @@ export const Product = Duck.define({
 	version: meta.version,
 	description: meta.description,
 	components: [
-		DuckRunner.Component({
-			modes: {
-				solo: DuckRunner.Template.Solo(),
-				processes: DuckRunner.Template.Processes(),
-			},
-			roles: {
-				server: ServerPlay,
-			},
-		}),
 		DuckWorkspace.Component({
 			root: '.data', log: 'log', temp: 'tmp',
 		}),
@@ -44,6 +35,15 @@ export const Product = Duck.define({
 		DuckWeb.Component([
 
 		]),
+		DuckRunner.Component({
+			modes: {
+				solo: DuckRunner.Template.Solo(),
+				processes: DuckRunner.Template.Processes(),
+			},
+			roles: {
+				server: ServerPlay,
+			},
+		}),
 	],
 }, function Robot({
 	Kit, Workspace, Runner,
@@ -56,8 +56,6 @@ export const Product = Duck.define({
 		write: _options.session.write,
 		remove: _options.session.remove,
 	});
-
-	Runner.ready();
 
 	return {
 		async install() {
