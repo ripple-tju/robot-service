@@ -1,6 +1,6 @@
 {
 	"name": "@ripple.tju/robot-service",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"private": true,
 	"description": "Service for operating human IO devices.",
 	"main": "src/index.mjs",
@@ -41,7 +41,7 @@
 		"@produck/duck-workspace": "^1.1.2",
 		"@produck/mold": "^0.3.1",
 		"@produck/quack": "^0.1.1",
-		"@ripple.tju/robot-protocol": "^0.0.0",
+		"@ripple.tju/robot-protocol": "^0.1.0",
 		"koa-body": "^6.0.1",
 		"koa-forker": "^0.1.1",
 		"ws": "^8.18.0"
