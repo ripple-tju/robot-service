@@ -1,4 +1,4 @@
-export class RobotControlState {
+export class RobotControlInstruction {
 	constructor() {
 		Object.freeze(this);
 	}
@@ -15,10 +15,10 @@ export class RobotControlState {
 		this.#id[0] = value;
 	}
 
-	#instruction = new Uint8Array(this.buffer, 1, 1);
+	#code = new Uint8Array(this.buffer, 1, 1);
 
-	setInstruction(code) {
-		this.#instruction[0] = code;
+	setCode(code) {
+		this.#code[0] = code;
 
 		return this;
 	}
@@ -32,10 +32,18 @@ export class RobotControlState {
 		return this;
 	}
 
-	#code = new Uint8Array(this.buffer, 2, 1);
+	#key = new Uint8Array(this.buffer, 2, 1);
 
-	setCode(code) {
-		this.#code[0] = code;
+	setKey(code) {
+		this.#key[0] = code;
+
+		return this;
+	}
+
+	#button = new Uint8Array(this.buffer, 2, 1);
+
+	setButton(code) {
+		this.#button[0] = code;
 
 		return this;
 	}
@@ -49,9 +57,9 @@ export class RobotControlState {
 	}
 }
 
-const { prototype } = RobotControlState;
+const { prototype } = RobotControlInstruction;
 
-for (const name of ['setPoint', 'setCode']) {
+for (const name of ['setPoint', 'setKey', 'setButton']) {
 	const _fn = prototype[name];
 
 	prototype[name] = {

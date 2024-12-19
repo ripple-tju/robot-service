@@ -18,7 +18,8 @@
 	},
 	"scripts": {
 		"build": "rollup -c script/rollup.config.mjs",
-		"prepublishOnly": "npm run build"
+		"prepublishOnly": "npm run build",
+		"test": "mocha \"**/test/*.spec.mjs\" -t 999999999"
 	},
 	"author": "ChaosLee",
 	"license": "MIT",

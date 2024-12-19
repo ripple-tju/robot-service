@@ -1,50 +1,82 @@
-import { RobotControlState } from './State.mjs';
+import { RobotControlInstruction } from './Instruction.mjs';
 import * as Setup from './Setup.mjs';
+import { Button, Key, Instruction } from '@ripple.tju/robot-protocol';
 
 const SEND = Symbol();
 const ASSERT_CONNECTED = Symbol();
 
+const VALUES = {
+	BUTTON: Object.values(Button),
+	KEY: Object.values(Key),
+};
+
+function assertButtonCode(any) {
+	if (!VALUES.BUTTON.includes(any)) {
+		throw new Error('Bad button code.');
+	}
+}
+
+function assertKeyCode(any) {
+	if (!VALUES.KEY.includes(any)) {
+		throw new Error('Bad key code.');
+	}
+}
+
 export class RobotControl extends EventTarget {
-	#state = new RobotControlState();
+	#instruction = new RobotControlInstruction();
 
-	/**
-	 * @type {WebSocket | null}
-	*/
+	/** @type {WebSocket | null} */
 	#websocket = null;
-	#url;
 
-	constructor(url) {
-		super();
-		this.#url = new URL(url);
-		Object.freeze(this);
+	[ASSERT_CONNECTED]() {
+		if (this.#websocket === null) {
+			throw new Error('Disconnected.');
+		}
 	}
 
-	async connect() {
-		const websocket = new WebSocket(this.#url);
+	async connect(url) {
+		const _url = new URL(url);
 
-		this.#websocket = websocket;
+		return new Promise((resolve, reject) => {
+			const websocket = this.#websocket = new WebSocket(_url);
 
-		websocket.addEventListener('message', ({ data }) => {
-			const [id, error] = new Uint8Array(data);
-			const pending = this.#pendings[id];
+			websocket.addEventListener('message', async ({ data }) => {
+				const [id, error] = await data.bytes();
+				const pending = this.#pendings[id];
 
-			if (pending !== undefined) {
-				pending.resolve(!error);
-			}
+				if (pending !== undefined) {
+					pending.resolve(!error);
+				}
+			});
+
+			websocket.addEventListener('close', () => {
+				this.#websocket = null;
+			});
+
+			websocket.addEventListener('error', () => {
+				reject(new Error('Connection failed.'));
+			});
+
+			websocket.addEventListener('open', () => {
+				resolve();
+			});
 		});
+	}
 
-		websocket.addEventListener('close', () => {
-			this.#websocket = null;
-		});
+	async disconnect() {
+		if (this.#websocket !== null) {
+			this.#websocket.close();
+			this.#websocket = false;
+		}
 	}
 
 	#pendings = {};
 
 	async [SEND]() {
-		const id = this.#state.id++;
+		const id = ++this.#instruction.id;
 		const timeout = Setup.timeout.get();
 
-		this.#websocket.send(this.#state.buffer);
+		this.#websocket.send(this.#instruction.buffer);
 
 		try {
 			const { promise, resolve, reject } = Promise.withResolvers();
@@ -63,30 +95,28 @@ export class RobotControl extends EventTarget {
 		}
 	}
 
-	[ASSERT_CONNECTED]() {
-		if (this.#websocket === null) {
-			throw new Error('Disconnected.');
-		}
-	}
-
 	async to(x, y) {
-		this.#state.setInstruction(0b0000).setPoint(x, y);
+		this.#instruction.setCode(Instruction.Mouse.Pointer.Set).setPoint(x, y);
 	}
 
 	async buttonDown(code) {
-		this.#state.setInstruction(0b0100).setCode(code);
+		assertButtonCode(code);
+		this.#instruction.setCode(Instruction.Mouse.Button.Down).setButton(code);
 	}
 
 	async buttonUp(code) {
-		this.#state.setInstruction(0b0101).setCode(code);
+		assertButtonCode(code);
+		this.#instruction.setCode(Instruction.Mouse.Button.Up).setButton(code);
 	}
 
 	async keyDown(code) {
-		this.#state.setInstruction(0b1000).setCode(code);
+		assertKeyCode(code);
+		this.#instruction.setCode(Instruction.Keyboard.Key.Down).setKey(code);
 	}
 
 	async keyUp(code) {
-		this.#state.setInstruction(0b1101).setCode(code);
+		assertKeyCode(code);
+		this.#instruction.setCode(Instruction.Keyboard.Key.Up).setKey(code);
 	}
 }
 
@@ -102,7 +132,7 @@ for (const name of [
 	prototype[name] = {
 		async [name](...args) {
 			this[ASSERT_CONNECTED]();
-			_fn.call(this, ...args);
+			await _fn.call(this, ...args);
 			await this[SEND]();
 		},
 	}[name];

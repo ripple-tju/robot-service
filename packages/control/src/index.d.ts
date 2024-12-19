@@ -10,11 +10,13 @@ export namespace Setup {
 	export const timeout: Item<number>;
 }
 
-declare class RobotControl {
+declare interface RobotControl {
 	/**
 	 * Connect to a robot service.
 	 */
 	connect(): Promise<undefined>;
+
+	disconnect(): undefined;
 
 	/**
 	 * Set mouse pointer position.
@@ -47,3 +49,5 @@ declare class RobotControl {
 	 */
 	keyUp(code: number): Promise<undefined>;
 }
+
+export const control: Readonly<RobotControl>;
