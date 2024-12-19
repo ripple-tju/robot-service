@@ -3,8 +3,7 @@
 	"version": "0.1.0",
 	"description": "Client SDK to @ripple.tju/robot-service.",
 	"files": [
-		"src",
-		"tsconfig.json"
+		"src"
 	],
 	"type": "module",
 	"main": "src/index.mjs",
@@ -22,5 +21,11 @@
 		"prepublishOnly": "npm run build"
 	},
 	"author": "ChaosLee",
-	"license": "MIT"
+	"license": "MIT",
+	"dependencies": {
+		"@ripple.tju/robot-protocol": "^0.0.0"
+	},
+	"devDependencies": {
+		"ws": "^8.18.0"
+	}
 }
